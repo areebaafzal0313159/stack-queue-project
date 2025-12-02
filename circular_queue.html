@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Circular Queue Simulator</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1{
+            color: #333;
+        }
+
+        #queue-container{
+            width: 500px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            min-height: 100px;
+            display: flex;
+            justify-content: flex-start; 
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            flex-wrap: wrap;
+        }
+
+        .queue-element{
+            background-color: #FF5722;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        button{
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+
+        button:hover{
+            background-color: #555;
+        }
+
+        #status{
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"]{
+            padding: 8px;
+            font-size: 16px;
+            width: 120px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Circular Queue Simulator</h1>
+<p>Enqueue and Dequeue elements to understand how Circular Queue works. Max size: 5</p>
+
+<div id="queue-container">
+    <!-- Circular queue elements appear here -->
+</div>
+
+<input type="text" id="queue-input" placeholder="Enter element">
+<button onclick="enqueue()">Enqueue</button>
+<button onclick="dequeue()">Dequeue</button>
+
+<div id="status">Queue is empty</div>
+
+<script>
+    const maxSize = 5;
+    let queue = new Array(maxSize);
+    let front = -1;
+    let rear = -1;
+
+    const queueContainer = document.getElementById("queue-container");
+    const status = document.getElementById("status");
+
+    function updateQueue(){
+        queueContainer.innerHTML = "";
+        for(let i = 0; i < maxSize; i++){
+            if(queue[i] !== undefined){
+                const div = document.createElement("div");
+                div.className = "queue-element";
+                div.textContent = queue[i];
+                queueContainer.appendChild(div);
+            }
+        }
+        if(front === -1) status.textContent = "Queue is empty";
+        else if((rear + 1) % maxSize === front && queue[rear] !== undefined) status.textContent = "Queue is full";
+        else status.textContent = `Front: ${front} | Rear: ${rear}`;
+    }
+
+    function enqueue(){
+        const value = document.getElementById("queue-input").value.trim();
+        if(value === ""){
+            status.textContent = "Please enter an element";
+            return;
+        }
+        if((rear + 1) % maxSize === front){
+            status.textContent = "Queue is full! Cannot enqueue.";
+            return;
+        }
+        if(front === -1) front = 0;
+        rear = (rear + 1) % maxSize;
+        queue[rear] = value;
+        document.getElementById("queue-input").value = "";
+        status.textContent = `Element "${value}" enqueued`;
+        updateQueue();
+    }
+
+    function dequeue(){
+        if(front === -1){
+            status.textContent = "Queue is empty! Cannot dequeue.";
+            return;
+        }
+        const removed = queue[front];
+        queue[front] = undefined;
+        if(front === rear){ // last element removed
+            front = -1;
+            rear = -1;
+        } else {
+            front = (front + 1) % maxSize;
+        }
+        status.textContent = `Element "${removed}" dequeued`;
+        updateQueue();
+    }
+
+    updateQueue();
+</script>
+
+</body>
+</html>

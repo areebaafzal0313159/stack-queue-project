@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stack Simulator</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1{
+            color: #333;
+        }
+
+        #stack-container{
+            width: 200px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column; /* top-bottom order correct */
+            justify-content: flex-end; /* bottom se start */
+            padding: 10px;
+            background-color: white;
+        }
+
+        .stack-element{
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        button{
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+
+        button:hover{
+            background-color: #555;
+        }
+
+        #status{
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"]{
+            padding: 8px;
+            font-size: 16px;
+            width: 120px;
+            text-align: center;
+        }
+
+        p{
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Stack Simulator</h1>
+<p>Push and Pop elements to learn how Stack works. Max size: 5</p>
+
+<div id="stack-container">
+    <!-- Stack elements will appear here -->
+</div>
+
+<input type="text" id="element-input" placeholder="Enter element">
+<button onclick="pushElement()">Push</button>
+<button onclick="popElement()">Pop</button>
+
+<div id="status">Stack is empty</div>
+
+<script>
+    let stack = [];
+    const maxSize = 5;
+    const stackContainer = document.getElementById("stack-container");
+    const status = document.getElementById("status");
+
+    function updateStack(){
+        stackContainer.innerHTML = "";
+        for(let i=stack.length-1; i>=0; i--){  // last pushed element top
+            const div = document.createElement("div");
+            div.className = "stack-element";
+            div.textContent = stack[i];
+            stackContainer.appendChild(div);
+        }
+
+        if(stack.length === 0){
+            status.textContent = "Stack is empty";
+        } else if(stack.length === maxSize){
+            status.textContent = "Stack is full";
+        } else{
+            status.textContent = "Stack has " + stack.length + " element(s)";
+        }
+    }
+
+    function pushElement(){
+        const value = document.getElementById("element-input").value.trim();
+        if(value === ""){
+            status.textContent = "Please enter an element";
+            return;
+        }
+        if(stack.length >= maxSize){
+            status.textContent = "Stack is full! Cannot push.";
+            return;
+        }
+        stack.push(value);
+        document.getElementById("element-input").value = "";
+        status.textContent = `Element "${value}" pushed`;
+        updateStack();
+    }
+
+    function popElement(){
+        if(stack.length === 0){
+            status.textContent = "Stack is empty! Cannot pop.";
+            return;
+        }
+        const popped = stack.pop();
+        status.textContent = `Element "${popped}" popped`;
+        updateStack();
+    }
+
+    updateStack();
+</script>
+
+</body>
+</html>
+

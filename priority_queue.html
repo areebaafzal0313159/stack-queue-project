@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Priority Queue Simulator</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1{
+            color: #333;
+        }
+
+        #queue-container{
+            width: 500px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            min-height: 100px;
+            display: flex;
+            justify-content: flex-start; 
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            flex-wrap: wrap;
+        }
+
+        .queue-element{
+            background-color: #FF9800;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        button{
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: green;
+            color: white;
+        }
+
+        button:hover{
+            background-color: white;
+            color: green;
+        }
+
+        input[type="text"], input[type="number"]{
+            padding: 8px;
+            font-size: 16px;
+            width: 100px;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        #status{
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Priority Queue Simulator</h1>
+<p>Enter element and its priority (higher number = higher priority). Max size: 5</p>
+
+<div id="queue-container">
+    <!-- Priority queue elements appear here -->
+</div>
+
+<input type="text" id="element-input" placeholder="Element">
+<input type="number" id="priority-input" placeholder="Priority">
+<button onclick="enqueue()">Enqueue</button>
+<button onclick="dequeue()">Dequeue</button>
+
+<div id="status">Queue is empty</div>
+
+<script>
+    const maxSize = 5;
+    let queue = [];
+
+    const queueContainer = document.getElementById("queue-container");
+    const status = document.getElementById("status");
+
+    function updateQueue(){
+        queueContainer.innerHTML = "";
+        for(let item of queue){
+            const div = document.createElement("div");
+            div.className = "queue-element";
+            div.textContent = `${item.value} (P:${item.priority})`;
+            queueContainer.appendChild(div);
+        }
+
+        if(queue.length === 0){
+            status.textContent = "Queue is empty";
+        } else if(queue.length === maxSize){
+            status.textContent = "Queue is full";
+        } else {
+            status.textContent = `Front → ${queue[0].value} | Rear → ${queue[queue.length-1].value}`;
+        }
+    }
+
+    function enqueue(){
+        const value = document.getElementById("element-input").value.trim();
+        const priority = parseInt(document.getElementById("priority-input").value);
+
+        if(value === "" || isNaN(priority)){
+            status.textContent = "Please enter element and priority";
+            return;
+        }
+
+        if(queue.length >= maxSize){
+            status.textContent = "Queue is full! Cannot enqueue.";
+            return;
+        }
+
+        queue.push({value, priority});
+        queue.sort((a,b) => b.priority - a.priority); // higher priority first
+        document.getElementById("element-input").value = "";
+        document.getElementById("priority-input").value = "";
+        status.textContent = `Element "${value}" enqueued with priority ${priority}`;
+        updateQueue();
+    }
+
+    function dequeue(){
+        if(queue.length === 0){
+            status.textContent = "Queue is empty! Cannot dequeue.";
+            return;
+        }
+        const removed = queue.shift();
+        status.textContent = `Element "${removed.value}" dequeued`;
+        updateQueue();
+    }
+
+    updateQueue();
+</script>
+
+</body>
+</html>

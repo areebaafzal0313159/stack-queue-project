@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DSA Project – Stack & Queue Info</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #fefefe;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .info-row{
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 40px;
+            font-size: 15px;
+            color: black;
+            margin-bottom: 0;
+        }
+        .info-row div{
+            font-weight: normal;
+        }
+
+        .header-box{
+            width: 100%;
+            background-color: #3b5998;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 0;
+        }
+        .header-box img{
+            height: 60px;
+        }
+        .header-box h1{
+            margin: 0;
+            font-size: 38px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .container{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 80px;
+        }
+
+        .left{
+            max-width: 600px;
+        }
+
+        .left h1{
+            font-size: 36px;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+        .left p{
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .start-btn{
+            padding: 12px 40px;
+            font-size: 20px;
+            background: green;
+            color: white;
+            border: 2px solid green;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .start-btn:hover{
+            background: white;
+            color: green;
+        }
+
+        .right img{
+            max-width: 450px;
+            border-radius: 10px;
+        }
+
+        @media screen and (max-width: 900px){
+            .container{
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 20px;
+            }
+            .right img{
+                margin-top: 30px;
+                max-width: 80%;
+            }
+            .header-box{
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .header-box img{
+                margin: 0 0 10px 0;
+            }
+            .info-row{
+                flex-direction: column;
+                gap: 5px;
+                padding: 5px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="info-row">
+    <div>Email: areebaafzal0313159@gmail.com</div>
+    <div>Project No. 1</div>
+    <div>LinkedIn: https://yd73bhbhegh.com</div>
+</div>
+
+<div class="header-box">
+    <img src="logo.png" alt="University Logo">
+    <h1>UNIVERSITY OF HARIPUR</h1>
+</div>
+
+<div class="container">
+    <div class="left">
+        <h1>STACK & QUEUE SIMULATOR</h1>
+        <p>
+            This project helps you understand the basic concepts of Stack and Queue data structures.
+            You can visually simulate Stack operations such as push, pop, peek and check empty,
+            and Queue operations like enqueue, dequeue, front and check empty.
+            It is a perfect tool for learning DSA in a practical way.
+        </p>
+        <button class="start-btn" onclick="window.location.href='stack_queue.html'">START</button>
+    </div>
+
+    <div class="right">
+        <img src="image.png" alt="DSA Illustration">
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

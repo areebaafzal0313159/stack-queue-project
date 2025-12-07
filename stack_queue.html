@@ -32,6 +32,7 @@
             cursor: pointer;
             font-size: 14px;
             margin-bottom: 30px;
+            margin-right: 10px;
         }
         .practice-btn:hover{
             background-color: white;
@@ -51,6 +52,7 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
         .feedback-btn:hover {
             background-color: #333333;
@@ -67,6 +69,7 @@
             border-radius:5px;
             width:250px;
             box-shadow:0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
         #feedback-box textarea{
             width:100%;
@@ -128,6 +131,97 @@
             color:red;
             border:1px solid red;
         }
+
+        /* ------------------ Responsive Styles ------------------ */
+        @media (max-width: 1024px) { /* Tablet */
+            body {
+                padding: 30px;
+            }
+            .practice-btn {
+                padding: 7px 18px;
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+            #feedback-box {
+                width: 220px;
+            }
+            #reviews-box {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) { /* Small tablets / large phones */
+            body {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            h2 {
+                font-size: 18px;
+            }
+            p {
+                font-size: 15px;
+            }
+            .practice-btn {
+                padding: 6px 15px;
+                font-size: 12px;
+                margin-bottom: 15px;
+            }
+            #feedback-box {
+                width: 200px;
+                bottom: 60px;
+                right: 15px;
+                padding: 12px;
+            }
+            #reviews-box {
+                width: 220px;
+                max-height: 350px;
+                padding: 12px;
+            }
+            .feedback-btn {
+                padding: 8px 16px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) { /* Mobile phones */
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            h2 {
+                font-size: 16px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .practice-btn {
+                padding: 5px 12px;
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+            #feedback-box {
+                width: 180px;
+                bottom: 50px;
+                right: 10px;
+                padding: 10px;
+            }
+            #reviews-box {
+                width: 180px;
+                max-height: 300px;
+                padding: 10px;
+            }
+            .feedback-btn {
+                padding: 6px 12px;
+                bottom: 10px;
+                right: 10px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -173,30 +267,25 @@ Common operations include <b>enqueue</b>, <b>dequeue</b>, <b>front</b>, and chec
 </div>
 
 <script>
-    // Toggle feedback box visibility
     function toggleFeedbackBox() {
         const box = document.getElementById('feedback-box');
         box.style.display = (box.style.display === 'none') ? 'block' : 'none';
     }
 
-    // Submit feedback
     function submitFeedback() {
         const feedback = document.getElementById('feedback-text').value.trim();
         if(feedback.length === 0) {
             alert('Please write your feedback before submitting.');
             return;
         }
-        // Save to localStorage
         let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
         feedbacks.push(feedback);
         localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-
         alert('Thank you for your feedback!');
         document.getElementById('feedback-text').value = '';
         document.getElementById('feedback-box').style.display = 'none';
     }
 
-    // Admin-only reviews view
     function showReviews() {
         const container = document.getElementById('reviews-container');
         container.innerHTML = '';
@@ -218,7 +307,6 @@ Common operations include <b>enqueue</b>, <b>dequeue</b>, <b>front</b>, and chec
         document.getElementById('reviews-box').style.display = 'none';
     }
 
-    // Optional: For testing, press "R" key to open reviews (admin)
     document.addEventListener('keydown', function(e){
         if(e.key.toLowerCase() === 'r'){ 
             showReviews();
@@ -228,14 +316,3 @@ Common operations include <b>enqueue</b>, <b>dequeue</b>, <b>front</b>, and chec
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Priority Queue Simulator</title>
+    <title>Simple Queue Simulator</title>
     <style>
         body{
             font-family: Arial, sans-serif;
@@ -38,7 +38,7 @@
         }
 
         .queue-element{
-            background-color: #FF9800;
+            background-color: #2196F3;
             color: white;
             padding: 10px 15px;
             margin: 5px;
@@ -47,10 +47,10 @@
             flex: 1 0 auto;
         }
 
-        input[type="text"], input[type="number"]{
+        input[type="text"]{
             padding: 8px;
             font-size: 16px;
-            width: 100px;
+            width: 120px;
             text-align: center;
             margin: 10px 5px;
         }
@@ -62,14 +62,13 @@
             border-radius: 5px;
             cursor: pointer;
             border: none;
-            background-color: green;
+            background-color: #333;
             color: white;
             transition: all 0.2s;
         }
 
         button:hover{
-            background-color: white;
-            color: green;
+            background-color: #555;
         }
 
         #status{
@@ -80,22 +79,19 @@
         }
 
         /* Responsive Styles */
-        @media screen and (max-width: 1024px){
-            #queue-container{
-                width: 450px;
-            }
-        }
-
         @media screen and (max-width: 768px){
             #queue-container{
                 width: 400px;
             }
-            input[type="text"], input[type="number"]{
-                width: 80px;
+            input[type="text"]{
+                width: 100px;
                 font-size: 14px;
             }
             button{
                 padding: 8px 16px;
+                font-size: 14px;
+            }
+            #status{
                 font-size: 14px;
             }
         }
@@ -107,8 +103,8 @@
             #queue-container{
                 width: 90%;
             }
-            input[type="text"], input[type="number"]{
-                width: 70px;
+            input[type="text"]{
+                width: 80px;
                 font-size: 12px;
             }
             button{
@@ -123,12 +119,12 @@
                 font-size: 14px;
             }
             #status{
-                font-size: 14px;
+                font-size: 12px;
             }
         }
 
         @media screen and (max-width: 400px){
-            input[type="text"], input[type="number"]{
+            input[type="text"]{
                 width: 60px;
             }
             button{
@@ -140,22 +136,20 @@
 </head>
 <body>
 
-<h1>Priority Queue Simulator</h1>
-<p>Enter element and its priority (higher number = higher priority). Max size: 5</p>
+<h1>Simple Queue Simulator</h1>
+<p>Enqueue and Dequeue elements to understand how Queue works. Max size: 5</p>
 
 <div id="queue-container"></div>
 
-<input type="text" id="element-input" placeholder="Element">
-<input type="number" id="priority-input" placeholder="Priority">
+<input type="text" id="queue-input" placeholder="Enter element">
 <button onclick="enqueue()">Enqueue</button>
 <button onclick="dequeue()">Dequeue</button>
 
 <div id="status">Queue is empty</div>
 
 <script>
-    const maxSize = 5;
     let queue = [];
-
+    const maxSize = 5;
     const queueContainer = document.getElementById("queue-container");
     const status = document.getElementById("status");
 
@@ -164,7 +158,7 @@
         for(let item of queue){
             const div = document.createElement("div");
             div.className = "queue-element";
-            div.textContent = `${item.value} (P:${item.priority})`;
+            div.textContent = item;
             queueContainer.appendChild(div);
         }
 
@@ -172,30 +166,24 @@
             status.textContent = "Queue is empty";
         } else if(queue.length === maxSize){
             status.textContent = "Queue is full";
-        } else {
-            status.textContent = `Front → ${queue[0].value} | Rear → ${queue[queue.length-1].value}`;
+        } else{
+            status.textContent = `Queue has ${queue.length} element(s)`;
         }
     }
 
     function enqueue(){
-        const value = document.getElementById("element-input").value.trim();
-        const priority = parseInt(document.getElementById("priority-input").value);
-
-        if(value === "" || isNaN(priority)){
-            status.textContent = "Please enter element and priority";
+        const value = document.getElementById("queue-input").value.trim();
+        if(value === ""){
+            status.textContent = "Please enter an element";
             return;
         }
-
         if(queue.length >= maxSize){
             status.textContent = "Queue is full! Cannot enqueue.";
             return;
         }
-
-        queue.push({value, priority});
-        queue.sort((a,b) => b.priority - a.priority); // higher priority first
-        document.getElementById("element-input").value = "";
-        document.getElementById("priority-input").value = "";
-        status.textContent = `Element "${value}" enqueued with priority ${priority}`;
+        queue.push(value);
+        document.getElementById("queue-input").value = "";
+        status.textContent = `Element "${value}" enqueued`;
         updateQueue();
     }
 
@@ -205,7 +193,7 @@
             return;
         }
         const removed = queue.shift();
-        status.textContent = `Element "${removed.value}" dequeued`;
+        status.textContent = `Element "${removed}" dequeued`;
         updateQueue();
     }
 
